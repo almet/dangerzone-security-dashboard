@@ -951,6 +951,7 @@
                 if (controlsWrapper.length) {
                      controlsWrapper.toggle(pageInfo.pages > 1);
                 }
+                updateSeverityCounts(api);
             },
 
             buttons: [
@@ -1213,6 +1214,49 @@
         if (toggle.checked) {
             table.draw();
         }
+    }
+
+    function updateSeverityCounts(table) {
+        const counts = {
+            'Critical': 0,
+            'High': 0,
+            'Medium': 0,
+            'Low': 0,
+            'Unknown': 0
+        };
+        const severityKeyMap = {
+            'critical': 'Critical',
+            'high': 'High',
+            'medium': 'Medium',
+            'low': 'Low',
+            'unknown': 'Unknown'
+        };
+        const rows = table.rows({ filter: 'applied' }).data();
+
+        for (let i = 0; i < rows.length; i += 1) {
+            const rawValue = rows[i][4];
+            const normalized = String(rawValue || '')
+                .replace(/<[^>]*>/g, '')
+                .trim()
+                .toLowerCase();
+            const severity = severityKeyMap[normalized] || 'Unknown';
+            counts[severity] += 1;
+        }
+
+        const countMap = {
+            'Critical': 'criticalCount',
+            'High': 'highCount',
+            'Medium': 'mediumCount',
+            'Low': 'lowCount',
+            'Unknown': 'unknownCount'
+        };
+
+        Object.entries(countMap).forEach(([severity, id]) => {
+            const elem = document.getElementById(id);
+            if (elem) {
+                elem.textContent = counts[severity];
+            }
+        });
     }
 
     function setDynamicPageLengthDt(table) {
