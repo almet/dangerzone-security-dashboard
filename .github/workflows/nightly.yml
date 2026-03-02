@@ -10,6 +10,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  packages: read
 
 # Allow only one concurrent deployment, skipping runs queued between the run
 # in-progress and latest queued. However, do NOT cancel in-progress runs as we
@@ -29,7 +30,22 @@ jobs:
       - name: Install grype
         run: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
 
-      - name: Run grype scan and generate HTML report
+      - name: Resolve latest untagged nightly digest
+        id: nightly_digest
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          package="dangerzone"
+          owner="freedomofpress"
+          digest=$(gh api -H "Accept: application/vnd.github+json" "/orgs/${owner}/packages/container/${package}/versions?per_page=100" \
+            --jq '[.[] | select((.metadata.container.tags | length) == 0)] | sort_by(.updated_at) | last | .metadata.container.digest')
+          if [ -z "$digest" ] || [ "$digest" = "null" ]; then
+            echo "No untagged digest found for ${owner}/${package}." >&2
+            exit 1
+          fi
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
+
+      - name: Run grype scan and generate HTML reports
         run: |
           grype ghcr.io/freedomofpress/dangerzone/v1:latest \
             --config .grype.yaml \
@@ -37,11 +53,19 @@ jobs:
             --template templates/html.tmpl \
             --file report.html
 
+          grype ghcr.io/freedomofpress/dangerzone@${{ steps.nightly_digest.outputs.digest }} \
+            --config .grype.yaml \
+            --output template \
+            --template templates/html.tmpl \
+            --file nightly.html
+
       - name: Upload HTML report as artifact
         uses: actions/upload-artifact@v4
         with:
           name: security-report
-          path: report.html
+          path: |
+            report.html
+            nightly.html
 
   deploy:
     name: Deploy to GitHub Pages

@@ -9,8 +9,8 @@ Each night, a GitHub Actions workflow:
 1. Installs [grype](https://github.com/anchore/grype) – an open-source vulnerability scanner.
 2. Scans the latest `ghcr.io/freedomofpress/dangerzone/v1` container image.
 3. Applies the same CVE ignore/filter list maintained by the Dangerzone team (see [`.grype.yaml`](.grype.yaml)).
-4. Renders the results using a hacker-themed HTML template (see [`templates/html.tmpl`](templates/html.tmpl)).
-5. Publishes the report to GitHub Pages as `index.html`.
+4. Renders the results using a hacker-themed HTML template (see [`templates/html.tmpl`](templates/html.tmpl)) for both stable and nightly scans.
+5. Publishes the reports to GitHub Pages as `index.html` (stable) and `nightly.html` (latest untagged nightly).
 
 ## Files
 
