@@ -329,6 +329,30 @@
 
     <!-- Table Control & Datatables Wrapper -->
     <style>
+        .state-filter {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            border-radius: 4px;
+            border: 1px solid #1a3a1a;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .state-filter label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .state-filter input[type="checkbox"] {
+            accent-color: #00ff41;
+        }
+
         .dataTables_wrapper {
             display: flex;
             justify-content: space-between;
@@ -792,6 +816,12 @@
                 <div class="severity-count" id="unknownCount">{{ $CountUnknown }}</div>
             </div>
         </div>
+        <div class="state-filter">
+            <label>
+                <input type="checkbox" id="toggleWontFix">
+                Hide wont-fix
+            </label>
+        </div>
         <div class="data-table">
             <table id="vulnerabilityTable" class="display nowrap" style="width:100%">
                 <thead>
@@ -844,6 +874,8 @@
     // ================================================
     // DataTables Core Logic & Callbacks
     // ================================================
+
+    let wontFixFilterFn;
 
     function initDataTable() {
         const tableElement = $('#vulnerabilityTable');
@@ -936,6 +968,7 @@
         });
 
         initSeverityFilteringDt(table);
+        initStateFilteringDt(table);
 
          const dtInstance = table;
          const debouncedPageLengthHandler = debounce(function() {
@@ -1098,6 +1131,45 @@
 
             table.draw();
         });
+    }
+
+    function initStateFilteringDt(table) {
+        const toggle = document.getElementById('toggleWontFix');
+
+        if (!toggle) {
+            return;
+        }
+
+        if (wontFixFilterFn) {
+            const index = $.fn.dataTable.ext.search.indexOf(wontFixFilterFn);
+            if (index > -1) {
+                $.fn.dataTable.ext.search.splice(index, 1);
+            }
+        }
+
+        wontFixFilterFn = function(settings, data) {
+            if (settings.nTable !== table.table().node()) {
+                return true;
+            }
+
+            if (!toggle.checked) {
+                return true;
+            }
+
+            const stateValue = data[5];
+            if (!stateValue) {
+                return true;
+            }
+
+            const normalized = String(stateValue).toLowerCase();
+            return normalized !== 'wont-fix' && normalized !== 'wontfix';
+        };
+
+        $.fn.dataTable.ext.search.push(wontFixFilterFn);
+
+        toggle.onchange = function() {
+            table.draw();
+        };
     }
 
     function setDynamicPageLengthDt(table) {
