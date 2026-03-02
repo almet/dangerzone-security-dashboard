@@ -35,30 +35,30 @@
     <!-- Hacker / Terminal Theme CSS Variables -->
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --text-color: #00ff41;
-            --text-dim: #008f11;
-            --container-bg: #0d0d0d;
-            --container-shadow: rgba(0, 255, 65, 0.15);
-            --header-bg: #111111;
-            --header-text: #00ff41;
-            --severity-box-text: rgba(0, 255, 65, 0.95);
-            --severity-box-shadow-hover: rgba(0, 255, 65, 0.4);
-            --input-border-color: #00ff41;
-            --input-bg-color: #0d0d0d;
-            --input-text-color: #00ff41;
-            --button-bg: #003b00;
-            --button-hover-bg: #005500;
-            --button-text: #00ff41;
-            --table-border: #1a3a1a;
-            --table-header-bg: #0f1f0f;
-            --table-header-text: #00ff41;
-            --table-row-hover-bg: #0a1a0a;
-            --link-color: #00ff41;
-            --link-visited-color: #39ff14;
-            --pill-text: #0a0a0a;
-            --glow: 0 0 8px #00ff41, 0 0 2px #00ff41;
-            --glow-strong: 0 0 15px #00ff41, 0 0 5px #00ff41;
+            --bg-color: #f7f4f1;
+            --text-color: #1b1b1b;
+            --text-dim: #6b5f58;
+            --container-bg: #ffffff;
+            --container-shadow: rgba(196, 53, 60, 0.2);
+            --header-bg: #f0e7e1;
+            --header-text: #1b1b1b;
+            --severity-box-text: rgba(27, 27, 27, 0.95);
+            --severity-box-shadow-hover: rgba(196, 53, 60, 0.35);
+            --input-border-color: #c4353c;
+            --input-bg-color: #ffffff;
+            --input-text-color: #1b1b1b;
+            --button-bg: #c4353c;
+            --button-hover-bg: #a92e34;
+            --button-text: #ffffff;
+            --table-border: #e0d6cf;
+            --table-header-bg: #f6eee9;
+            --table-header-text: #1b1b1b;
+            --table-row-hover-bg: #f9f2ed;
+            --link-color: #c4353c;
+            --link-visited-color: #8c2a2f;
+            --pill-text: #1b1b1b;
+            --glow: 0 0 8px rgba(196, 53, 60, 0.3), 0 0 2px rgba(196, 53, 60, 0.2);
+            --glow-strong: 0 0 15px rgba(196, 53, 60, 0.4), 0 0 5px rgba(196, 53, 60, 0.3);
         }
 
         /* DataTables dark mode adjustments */
@@ -70,7 +70,7 @@
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
-            color: #004400 !important;
+            color: #9b7f75 !important;
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
@@ -103,8 +103,8 @@
                     0deg,
                     transparent,
                     transparent 2px,
-                    rgba(0, 255, 65, 0.02) 2px,
-                    rgba(0, 255, 65, 0.02) 4px
+                    rgba(196, 53, 60, 0.04) 2px,
+                    rgba(196, 53, 60, 0.04) 4px
                 );
         }
 
@@ -129,8 +129,8 @@
             max-width: 1200px;
             background-color: var(--container-bg);
             padding: 20px;
-            box-shadow: 0 0 30px var(--container-shadow), 0 0 60px rgba(0, 255, 65, 0.05);
-            border: 1px solid #1a3a1a;
+            box-shadow: 0 0 30px var(--container-shadow), 0 0 60px rgba(196, 53, 60, 0.08);
+            border: 1px solid #e0d6cf;
             border-radius: 4px;
             margin: 20px;
         }
@@ -160,8 +160,8 @@
             border-radius: 4px;
             background-color: var(--header-bg);
             color: var(--header-text);
-            border: 1px solid #1a3a1a;
-            border-top: 3px solid #00ff41;
+            border: 1px solid #e0d6cf;
+            border-top: 3px solid #c4353c;
             box-shadow: var(--glow);
         }
 
@@ -181,7 +181,7 @@
         .heading-right img {
             width: 70px;
             height: auto;
-            filter: drop-shadow(0 0 8px #00ff41);
+            filter: drop-shadow(0 0 8px #c4353c);
         }
 
         .heading-left h1,
@@ -237,7 +237,42 @@
         /* Terminal prompt prefix */
         .heading-left dt::before {
             content: '> ';
-            color: #00ff41;
+            color: #c4353c;
+        }
+    </style>
+
+    <!-- View Switch -->
+    <style>
+        .view-switch {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .view-switch a {
+            padding: 6px 10px;
+            border: 1px solid var(--table-border);
+            border-radius: 4px;
+            background-color: var(--header-bg);
+            color: var(--text-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.75em;
+            text-decoration: none;
+        }
+
+        .view-switch a:hover {
+            text-shadow: none;
+            background-color: var(--table-row-hover-bg);
+        }
+
+        .view-switch a.active {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border-color: var(--button-bg);
         }
     </style>
 
@@ -252,7 +287,7 @@
             color: var(--header-text);
             margin-bottom: 20px;
             border-radius: 4px;
-            border: 1px solid #1a3a1a;
+            border: 1px solid #e0d6cf;
         }
 
         .severity-box {
@@ -287,12 +322,12 @@
             font-family: 'VT323', monospace;
             font-size: 3.5em;
             margin-bottom: 20px;
-            color: #0a0a0a;
+            color: var(--pill-text);
             text-shadow: none;
         }
 
         .severity-box.active {
-            border: 2px solid #00ff41;
+            border: 2px solid #c4353c;
             box-shadow: var(--glow);
         }
 
@@ -312,8 +347,8 @@
         }
 
         #low {
-            background-color: #006600;
-            box-shadow: 0 0 10px rgba(0,102,0,0.4);
+            background-color: #2f6f91;
+            box-shadow: 0 0 10px rgba(47,111,145,0.4);
         }
 
         #unknown {
@@ -338,7 +373,7 @@
             background-color: var(--header-bg);
             color: var(--header-text);
             border-radius: 4px;
-            border: 1px solid #1a3a1a;
+            border: 1px solid #e0d6cf;
             font-family: 'Share Tech Mono', monospace;
         }
 
@@ -350,7 +385,7 @@
         }
 
         .state-filter input[type="checkbox"] {
-            accent-color: #00ff41;
+            accent-color: #c4353c;
         }
 
         .dataTables_wrapper {
@@ -362,7 +397,7 @@
             margin-bottom: 10px;
             border-radius: 4px;
             transition: background-color 0.3s ease, color 0.3s ease;
-            border: 1px solid #1a3a1a;
+            border: 1px solid #e0d6cf;
         }
 
         .dt-buttons {
@@ -377,7 +412,7 @@
         .dt-button {
             background-color: var(--button-bg) !important;
             color: var(--button-text) !important;
-            border: 1px solid #00ff41 !important;
+            border: 1px solid #c4353c !important;
             border-radius: 2px !important;
             padding: 0 !important;
             width: 36px !important;
@@ -403,13 +438,13 @@
         .dt-button.buttons-pdf,
         .dt-button.buttons-excel {
             background-color: transparent !important;
-            border: 1px solid #003b00 !important;
+            border: 1px solid #c4353c !important;
             box-shadow: none !important;
         }
 
         .dt-button.buttons-pdf:hover,
         .dt-button.buttons-excel:hover {
-            background-color: rgba(0, 255, 65, 0.1) !important;
+            background-color: rgba(196, 53, 60, 0.12) !important;
             box-shadow: var(--glow) !important;
         }
 
@@ -468,7 +503,7 @@
             vertical-align: middle;
             cursor: pointer;
             font-family: 'Share Tech Mono', monospace;
-            border: 1px solid #00ff41;
+            border: 1px solid #c4353c;
             box-shadow: var(--glow);
         }
 
@@ -528,7 +563,7 @@
             border-radius: 4px;
             overflow-x: auto;
             transition: background-color 0.3s ease, color 0.3s ease;
-            border: 1px solid #1a3a1a;
+            border: 1px solid #e0d6cf;
         }
 
         table.display {
@@ -551,7 +586,7 @@
             text-transform: uppercase;
             font-size: 0.8em;
             letter-spacing: 1px;
-            border-bottom: 2px solid #00ff41;
+            border-bottom: 2px solid #c4353c;
             text-shadow: var(--glow);
         }
 
@@ -581,7 +616,7 @@
 
         .fixed-in li::before {
             content: '+ ';
-            color: #00ff41;
+            color: #c4353c;
         }
     </style>
 
@@ -592,7 +627,7 @@
             display: inline-block;
             padding: 3px 8px;
             border-radius: 2px;
-            color: #0a0a0a;
+            color: var(--pill-text);
             text-align: center;
             font-family: 'Share Tech Mono', monospace;
             font-size: 0.85em;
@@ -619,9 +654,9 @@
         }
 
         .low, .child-row-details .low {
-            background-color: #006600;
-            box-shadow: 0 0 6px rgba(0,102,0,0.6);
-            color: #00ff41;
+            background-color: #2f6f91;
+            box-shadow: 0 0 6px rgba(47,111,145,0.5);
+            color: #fff;
         }
 
         .unknown, .child-row-details .unknown {
@@ -659,9 +694,9 @@
         }
 
         .wont-fix, .child-row-details .wont-fix {
-            background-color: #006600;
-            color: #00ff41;
-            box-shadow: 0 0 6px rgba(0,102,0,0.5);
+            background-color: #7a5a5a;
+            color: #fff;
+            box-shadow: 0 0 6px rgba(122,90,90,0.5);
         }
     </style>
 
@@ -698,7 +733,7 @@
             display: inline-block;
             width: 1.2em;
             height: 1.2em;
-            background-color: #00ff41;
+            background-color: #c4353c;
             mask-image: url('https://api.iconify.design/file-icons:alpine-linux.svg');
             mask-size: contain;
             mask-repeat: no-repeat;
@@ -794,6 +829,10 @@
                     alt="Dangerzone Logo">
             </div>
         </div>
+        <div class="view-switch" role="navigation" aria-label="Report view">
+            <a href="index.html" data-view="latest">Latest</a>
+            <a href="nightly.html" data-view="nightly">Nightly</a>
+        </div>
         <div class="severity-info">
             <div class="severity-box" id="critical">
                 <div class="severity-title">Critical</div>
@@ -818,7 +857,7 @@
         </div>
         <div class="state-filter">
             <label>
-                <input type="checkbox" id="toggleWontFix">
+                <input type="checkbox" id="toggleWontFix" checked>
                 Hide wont-fix
             </label>
         </div>
@@ -1170,6 +1209,10 @@
         toggle.onchange = function() {
             table.draw();
         };
+
+        if (toggle.checked) {
+            table.draw();
+        }
     }
 
     function setDynamicPageLengthDt(table) {
@@ -1266,6 +1309,22 @@
              prettyDateElement.style.display = '';
              originalDateElement.style.display = 'none';
         }
+    }
+
+    function setViewSwitchActive() {
+        const switcher = document.querySelector('.view-switch');
+        if (!switcher) {
+            return;
+        }
+
+        const path = window.location.pathname || '';
+        const activeView = path.endsWith('nightly.html') ? 'nightly' : 'latest';
+
+        switcher.querySelectorAll('a[data-view]').forEach(link => {
+            if (link.dataset.view === activeView) {
+                link.classList.add('active');
+            }
+        });
     }
 
     function getReportMetadata() {
@@ -1434,6 +1493,7 @@
         }
 
         renderFormattedTimestamp();
+        setViewSwitchActive();
         initDataTable();
     });
 
